@@ -40,4 +40,36 @@
             <x-primary-button>{{ __('Log in') }}</x-primary-button>
         </div>
     </form>
+    <div class="mt-6 text-sm text-slate-400">
+        <div class="mb-2">Quick demo logins:</div>
+        <div class="flex gap-3">
+            <button id="demo-admin" class="secondary-button">Use admin</button>
+            <button id="demo-investor" class="secondary-button">Use investor</button>
+            <button id="demo-startup" class="secondary-button">Use startup</button>
+        </div>
+    </div>
+
+    <script>
+        (function(){
+            const demoAccounts = {
+                admin: { email: 'admin@fundhub.test', password: 'password' },
+                investor: { email: 'investor@fundhub.test', password: 'password' },
+                startup: { email: 'startup@fundhub.test', password: 'password' },
+            };
+
+            function fillAndSubmit(account){
+                const e = document.getElementById('email');
+                const p = document.getElementById('password');
+                if(!e || !p) return;
+                e.value = account.email;
+                p.value = account.password;
+                // Submit the enclosing form
+                e.closest('form')?.submit();
+            }
+
+            document.getElementById('demo-admin')?.addEventListener('click', function(e){ e.preventDefault(); fillAndSubmit(demoAccounts.admin); });
+            document.getElementById('demo-investor')?.addEventListener('click', function(e){ e.preventDefault(); fillAndSubmit(demoAccounts.investor); });
+            document.getElementById('demo-startup')?.addEventListener('click', function(e){ e.preventDefault(); fillAndSubmit(demoAccounts.startup); });
+        })();
+    </script>
 </x-guest-layout>
