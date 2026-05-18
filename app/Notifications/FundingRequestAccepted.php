@@ -20,7 +20,7 @@ class FundingRequestAccepted extends Notification
         return (new MailMessage)
                     ->subject('Your funding request was accepted')
                     ->line('Good news — an investor accepted your funding request. You can now open the conversation in the platform.')
-                    ->action('Open conversation', url('/'))
+                    ->action('Open conversation', url('/requests'))
                     ->line('Thank you for using our platform!');
     }
 }

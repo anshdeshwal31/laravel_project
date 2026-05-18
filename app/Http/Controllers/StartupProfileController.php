@@ -25,6 +25,10 @@ class StartupProfileController extends Controller
             'location' => ['required', 'string', 'max:255'],
             'pitch_description' => ['required', 'string'],
             'documents.*' => ['nullable', 'file', 'mimes:pdf,ppt,pptx,doc,docx'],
+        ], [
+            'documents.*.uploaded' => 'One of the files exceeds the allowed upload limit (usually 2MB) or failed to upload.',
+            'documents.*.file' => 'One of the files must be a valid uploaded file.',
+            'documents.*.mimes' => 'Each uploaded document must be a PDF, PowerPoint, or Word file.',
         ]);
 
         $existingPaths = $request->user()->startupProfile?->document_paths ?? [];

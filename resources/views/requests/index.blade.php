@@ -7,7 +7,7 @@
         </div>
     </x-slot>
 
-    <div class="px-4 py-10 sm:px-6 lg:px-8 dark:bg-slate-950 light:bg-slate-50 min-h-screen transition-colors">
+    <div x-data="{}" class="px-4 py-10 sm:px-6 lg:px-8 dark:bg-slate-950 light:bg-slate-50 min-h-screen transition-colors">
         <div class="mx-auto max-w-7xl">
             @if (session('status'))
                 <div class="mb-4 rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-emerald-200 dark:border-emerald-400/20 dark:bg-emerald-500/10 dark:text-emerald-200 light:border-emerald-200 light:bg-emerald-100 light:text-emerald-900">{{ session('status') }}</div>
@@ -37,6 +37,9 @@
                                         <td class="space-x-3">
                                             <a href="{{ route('messages.show', $item) }}" class="text-cyan-300 dark:text-cyan-300 dark:hover:text-cyan-200 light:text-cyan-600 light:hover:text-cyan-700 transition">Messages</a>
                                         @if (auth()->user()->role === 'investor' && auth()->id() === $item->investor_user_id)
+                                            <a href="{{ route('requests.review.show', $item) }}" class="text-indigo-400 dark:text-indigo-400 dark:hover:text-indigo-300 light:text-indigo-600 light:hover:text-indigo-700 transition">
+                                                AI Review
+                                            </a>
                                             <form method="POST" action="{{ route('requests.status', $item) }}" class="mt-3 inline-flex items-center gap-2 lg:mt-0">
                                                 @csrf
                                                 @method('PATCH')
@@ -61,4 +64,5 @@
             </div>
         </div>
     </div>
+
 </x-app-layout>

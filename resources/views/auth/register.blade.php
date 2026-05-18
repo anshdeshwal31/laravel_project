@@ -22,7 +22,7 @@
 
         <div>
             <x-input-label for="role" :value="__('I am a')" class="saas-label" />
-            <select id="role" name="role" class="saas-input" required>
+            <select id="role" name="role" class="saas-input dark:bg-white/5 dark:border-white/10 dark:text-white light:bg-white light:border-slate-300 light:text-slate-900" required>
                 <option value="startup" @selected(old('role') === 'startup')>Startup</option>
                 <option value="investor" @selected(old('role') === 'investor')>Investor</option>
             </select>

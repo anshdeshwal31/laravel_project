@@ -40,7 +40,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div>
                             <x-input-label for="stage" value="Stage" class="saas-label" />
-                            <select id="stage" name="stage" class="saas-input" required>
+                            <select id="stage" name="stage" class="saas-input dark:bg-white/5 dark:border-white/10 dark:text-white light:bg-white light:border-slate-300 light:text-slate-900" required>
                                 @php($selectedStage = old('stage', $profile?->stage))
                                 @foreach (['idea', 'pre-seed', 'seed', 'series-a', 'growth'] as $stage)
                                     <option value="{{ $stage }}" @selected($selectedStage === $stage)>{{ ucfirst($stage) }}</option>
@@ -69,7 +69,7 @@
                     <div>
                         <x-input-label for="documents" value="Upload Documents (PDF, PPT, DOC)" class="saas-label" />
                         <input id="documents" name="documents[]" type="file" multiple class="saas-input file:mr-4 file:rounded-full file:border-0 file:bg-white/10 file:px-4 file:py-2 file:text-white hover:file:bg-white/15" />
-                        <x-input-error :messages="$errors->get('documents.*')" class="saas-error" />
+                        <x-input-error :messages="array_merge($errors->get('documents'), \Illuminate\Support\Arr::flatten($errors->get('documents.*')))" class="saas-error" />
                     </div>
 
                     @if (!empty($profile?->document_paths))

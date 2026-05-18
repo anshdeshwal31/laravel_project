@@ -43,4 +43,13 @@ class FundingRequest extends Model
     {
         return $this->hasMany(Message::class);
     }
+
+    /**
+     * Get the AI review associated with this funding request.
+     */
+    public function aiReview(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(FundingRequestReview::class);
+    }
 }
+

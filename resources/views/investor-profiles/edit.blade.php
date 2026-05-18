@@ -20,7 +20,7 @@
 
                     <div>
                         <x-input-label for="investor_type" value="Investor Type" class="saas-label" />
-                        <select id="investor_type" name="investor_type" class="saas-input" required>
+                            <select id="investor_type" name="investor_type" class="saas-input dark:bg-white/5 dark:border-white/10 dark:text-white light:bg-white light:border-slate-300 light:text-slate-900" required>
                             @php($investorType = old('investor_type', $profile?->investor_type))
                             @foreach (['angel', 'vc', 'bank', 'crowdfunding'] as $type)
                                 <option value="{{ $type }}" @selected($investorType === $type)>{{ strtoupper($type) }}</option>

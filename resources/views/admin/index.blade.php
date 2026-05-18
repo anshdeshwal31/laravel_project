@@ -15,7 +15,7 @@
 
             <div class="saas-card">
                 <form method="GET" action="{{ route('admin.index') }}" class="flex flex-col gap-3 sm:flex-row sm:items-center">
-                    <select name="role" class="saas-input sm:max-w-[220px]">
+                    <select name="role" class="saas-input sm:max-w-[220px] dark:bg-white/5 dark:border-white/10 dark:text-white light:bg-white light:border-slate-300 light:text-slate-900">
                         <option value="">All roles</option>
                         @foreach (['startup', 'investor', 'admin'] as $role)
                             <option value="{{ $role }}" @selected($roleFilter === $role)>{{ ucfirst($role) }}</option>

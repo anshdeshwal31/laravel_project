@@ -1,20 +1,19 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight dark:text-white light:text-slate-900">Messages</h2>
-            <button id="theme-toggle" class="px-3 py-1 rounded-lg border border-white/10 bg-white/5 text-sm text-gray-300 hover:bg-white/10 transition">
-                🌙
-            </button>
+        <div>
+            <p class="section-label mb-3">Conversation</p>
+            <h2 class="text-3xl font-bold tracking-tight text-white dark:text-white light:text-slate-900">Messages</h2>
+            <p class="mt-2 text-sm text-slate-400 dark:text-slate-400 light:text-slate-600">Direct discussion between startup and investor.</p>
         </div>
     </x-slot>
 
-    <div class="py-10">
-        <div class="mx-auto max-w-5xl sm:px-6 lg:px-8">
-            <div class="bg-white/5 glass-card rounded-lg p-6 text-sm text-gray-300 border border-white/10 dark:bg-white/5 dark:text-gray-300 dark:border-white/10 light:bg-gray-100 light:text-gray-800 light:border-gray-300">
+    <div class="px-4 py-10 sm:px-6 lg:px-8">
+        <div class="mx-auto max-w-5xl">
+            <div class="saas-card dark:bg-white/5 dark:border-white/10 light:bg-white light:border-slate-200 p-6">
                 <div class="flex items-center justify-between mb-4">
                     <div>
                         <h2 class="text-xs font-bold text-indigo-500 uppercase tracking-widest">Funding Discussion</h2>
-                        <p class="text-white font-semibold text-lg dark:text-white light:text-gray-900">{{ $fundingRequest->startup?->name }}</p>
+                        <p class="text-white font-semibold text-lg dark:text-white light:text-slate-900">{{ $fundingRequest->startup?->name }}</p>
                         <p class="text-gray-400 text-xs mt-1 dark:text-gray-400 light:text-gray-600">Requested: ${{ number_format($fundingRequest->requested_amount, 0) }}</p>
                     </div>
                     <div class="flex items-center gap-3">
@@ -27,7 +26,7 @@
                         @forelse ($fundingRequest->messages as $message)
                             <div class="flex flex-col {{ auth()->id() === $message->sender_id ? 'items-end' : 'items-start' }}">
                                 <span class="text-[10px] text-gray-500 mb-1 font-bold uppercase tracking-tight dark:text-gray-500 light:text-gray-600">
-                                    {{ $message->sender->name }} • {{ $message->created_at->diffForHumans() }}
+                                    {{ $message->sender->name }} &middot; {{ $message->created_at->diffForHumans() }}
                                 </span>
                                 <div class="px-4 py-3 rounded-2xl text-sm shadow-lg {{ auth()->id() === $message->sender_id ? 'bg-indigo-700 text-white rounded-tr-none dark:bg-indigo-700 light:bg-indigo-600' : 'bg-gray-800 text-gray-100 rounded-tl-none border border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700 light:bg-gray-200 light:text-gray-900 light:border-gray-400' }} max-w-[90%]">
                                     {{ $message->body }}
@@ -49,7 +48,7 @@
                                     id="body"
                                     name="body"
                                     rows="3"
-                                    class="w-full min-h-[96px] bg-white/5 border border-white/6 text-slate-900 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-slate-400 p-4 resize-none dark:bg-white/5 dark:border-white/6 dark:text-slate-900 dark:placeholder:text-slate-400 light:bg-gray-50 light:border-gray-300 light:text-gray-900 light:placeholder:text-gray-500"
+                                    class="w-full min-h-[96px] bg-white/5 border border-white/10 text-white rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent placeholder:text-slate-400 p-4 resize-none dark:bg-white/5 dark:border-white/10 dark:text-white dark:placeholder:text-slate-400 light:bg-gray-50 light:border-gray-300 light:text-gray-900 light:placeholder:text-gray-500"
                                     placeholder="Write a message to the startup..."
                                     required></textarea>
 
@@ -69,8 +68,8 @@
         (function () {
             const form = document.getElementById('chat-form');
             const messagesEl = document.getElementById('chat-messages');
-                const csrfTokenElement = document.querySelector('meta[name="csrf-token"]');
-                const csrfToken = csrfTokenElement ? csrfTokenElement.getAttribute('content') : '';
+            const csrfTokenElement = document.querySelector('meta[name="csrf-token"]');
+            const csrfToken = csrfTokenElement ? csrfTokenElement.getAttribute('content') : '';
 
             if (!form || !messagesEl) return;
 
@@ -101,10 +100,10 @@
                         method: 'POST',
                         body: fd,
                         credentials: 'same-origin',
-                            headers: {
-                                'X-Requested-With': 'XMLHttpRequest',
-                                'X-CSRF-TOKEN': csrfToken
-                            }
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'X-CSRF-TOKEN': csrfToken
+                        }
                     });
                     if (!res.ok) throw new Error('Failed to send message');
                     await loadMessages();
@@ -125,4 +124,4 @@
             setInterval(loadMessages, 2000);
         })();
     </script>
- </x-app-layout>
+</x-app-layout>

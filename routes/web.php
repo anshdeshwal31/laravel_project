@@ -18,7 +18,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/opportunities', [FundingOpportunityController::class, 'index'])->name('opportunities.index');
-    Route::get('/opportunities/{opportunity}', [FundingOpportunityController::class, 'show'])->name('opportunities.show');
+
 
     Route::get('/requests', [FundingRequestController::class, 'index'])->name('requests.index');
     Route::get('/requests/{fundingRequest}/messages', [MessageController::class, 'show'])->name('messages.show');
@@ -45,6 +45,12 @@ Route::middleware(['auth', 'role:investor'])->group(function () {
     Route::get('/opportunities/create', [FundingOpportunityController::class, 'create'])->name('opportunities.create');
     Route::post('/opportunities', [FundingOpportunityController::class, 'store'])->name('opportunities.store');
     Route::patch('/requests/{fundingRequest}/status', [FundingRequestController::class, 'updateStatus'])->name('requests.status');
+
+    // ── AI Pitch Deck Reviewer ──────────────────────────────────────────────────
+    Route::post('/requests/{fundingRequest}/review/trigger', [\App\Http\Controllers\AiReviewController::class, 'trigger'])->name('requests.review.trigger');
+    Route::get('/requests/{fundingRequest}/review/status', [\App\Http\Controllers\AiReviewController::class, 'status'])->name('requests.review.status');
+    Route::get('/requests/{fundingRequest}/review', [\App\Http\Controllers\AiReviewController::class, 'show'])->name('requests.review.show');
+    Route::get('/investor/ai-reviews', [\App\Http\Controllers\AiReviewController::class, 'index'])->name('requests.review.index');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
@@ -57,6 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/opportunities/{opportunity}', [FundingOpportunityController::class, 'show'])->name('opportunities.show');
 });
 
 require __DIR__.'/auth.php';
