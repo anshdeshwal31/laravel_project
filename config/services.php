@@ -35,4 +35,18 @@ return [
         ],
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Internal Microservices
+    |--------------------------------------------------------------------------
+    */
+
+    'rag' => [
+        'url' => env('RAG_SERVICE_URL', 'http://localhost:3001'),
+    ],
+
+    'recommender' => [
+        'url' => env('RECOMMENDER_SERVICE_URL', 'http://localhost:3002'),
+    ],
+
 ];

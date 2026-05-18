@@ -24,12 +24,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/requests/{fundingRequest}/messages', [MessageController::class, 'show'])->name('messages.show');
     Route::get('/requests/{fundingRequest}/messages/partial', [MessageController::class, 'partial'])->name('messages.partial');
     Route::post('/requests/{fundingRequest}/messages', [MessageController::class, 'store'])->name('messages.store');
+
+    // ── AI Assistant (RAG) — all authenticated users ──────────────────────
+    Route::get('/ai-assistant', [\App\Http\Controllers\AiAssistantController::class, 'index'])->name('ai-assistant.index');
+    Route::post('/ai-assistant/search', [\App\Http\Controllers\AiAssistantController::class, 'search'])->name('ai-assistant.search');
 });
 
 Route::middleware(['auth', 'role:startup'])->group(function () {
     Route::get('/startup/profile', [StartupProfileController::class, 'edit'])->name('startup.profile.edit');
     Route::put('/startup/profile', [StartupProfileController::class, 'update'])->name('startup.profile.update');
     Route::post('/requests', [FundingRequestController::class, 'store'])->name('requests.store');
+
+    // ── Investor recommendations — startup role only ───────────────────────
+    Route::get('/recommendations', [\App\Http\Controllers\RecommendationController::class, 'index'])->name('recommendations.index');
 });
 
 Route::middleware(['auth', 'role:investor'])->group(function () {
